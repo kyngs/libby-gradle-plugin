@@ -25,59 +25,16 @@ import java.io.IOException;
  */
 public class LibbyGradlePlugin implements Plugin<Project> {
     public void apply(Project project) {
-        Configuration customScope = project.getConfigurations().create("libby");
+        project.getExtensions().create("libby", LibbyExtension.class);
 
-        customScope.setTransitive(false);
+        Configuration customScope = project.getConfigurations().create("libby");
 
         project.getPlugins().apply(JavaPlugin.class);
         project.getConfigurations().getByName(JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME).extendsFrom(customScope);
 
-        var main = project
-                .getExtensions()
-                .getByType(JavaPluginExtension.class)
-                .getSourceSets()
-                .getByName(SourceSet.MAIN_SOURCE_SET_NAME);
-
-        var output = new File(project.getBuildDir().getPath() + "/libby", "libby.json");
-        output.getParentFile().mkdirs();
-
-        main.getResources().srcDir(output.getParentFile());
-
-        project.getTasks().withType(ProcessResources.class, resourcesTask -> {
-            resourcesTask.dependsOn(customScope);
-
-            resourcesTask.doFirst(task -> {
-                var writer = JsonWriter.string();
-
-                writer.object();
-                writer.value("version", 0);
-
-                writer.array("libraries");
-
-                for (ResolvedArtifact artifact : customScope.getResolvedConfiguration().getResolvedArtifacts()) {
-                    writer.object();
-                    var id = artifact.getModuleVersion().getId();
-                    writer.value("group", id.getGroup());
-                    writer.value("name", id.getName());
-                    writer.value("version", id.getVersion());
-
-                    writer.end();
-                }
-
-                writer.end();
-                writer.end();
-
-                try {
-                    output.createNewFile();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                try (FileWriter fileWriter = new FileWriter(output)) {
-                    fileWriter.write(writer.done());
-                } catch (IOException e) {
-                    throw new RuntimeException("Failed to write custom scope dependencies to JSON file", e);
-                }
-            });
+        project.getTasks().register("libby", LibbyTask.class, customScope, project);
+        project.getTasks().withType(ProcessResources.class).configureEach(task -> {
+            task.dependsOn("libby");
         });
     }
 }

@@ -14,10 +14,13 @@ plugins {
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+    gradlePluginPortal()
 }
 
 dependencies {
     implementation("com.grack:nanojson:1.7")
+
+    compileOnly("com.github.johnrengelman:shadow:8.1.1")
 
     // Use JUnit Jupiter for testing.
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
@@ -30,7 +33,7 @@ gradlePlugin {
         create("xyz.kyngs.libby.plugin") {
             id = "xyz.kyngs.libby.plugin"
             implementationClass = "xyz.kyngs.libby.plugin.LibbyGradlePlugin"
-            version = "1.0.1"
+            version = "1.0.0"
         }
     }
 }
@@ -40,4 +43,9 @@ tasks.named<Test>("test") {
     useJUnitPlatform()
 }
 
-version = "1.0.1"
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+version = "1.0.0"
