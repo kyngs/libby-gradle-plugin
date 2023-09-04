@@ -39,6 +39,8 @@ gradlePlugin {
     }
 }
 
+group = "xyz.kyngs.libby.plugin"
+
 tasks.named<Test>("test") {
     // Use JUnit Jupiter for unit tests.
     useJUnitPlatform()
