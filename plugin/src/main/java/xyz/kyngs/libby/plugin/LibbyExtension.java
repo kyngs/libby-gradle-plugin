@@ -17,7 +17,7 @@ public class LibbyExtension {
     }
 
     /**
-     * Add a dependency to exclude from the libby.json
+     * Add a dependency to exclude from the libby.json file. <br>
      * <br>
      * The dependency is a regex matching the format "group:name:version" <br>
      * For example "org\\.company:library:.*" will exclude all versions of the library "library" from the group "org.company"
