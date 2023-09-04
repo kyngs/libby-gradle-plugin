@@ -78,11 +78,6 @@ publishing {
             }
         }
     }
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["java"])
-        }
-    }
 }
 
 version = "1.0.0"
