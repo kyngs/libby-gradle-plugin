@@ -97,7 +97,7 @@ Fortunately, this can be easily solved by excluding the dependency:
 
 ```groovy
 libby {
-    exludeDependency 'org.slf4j:.*:.*'
+    excludeDependency 'org.slf4j:.*:.*'
 }
 ```
 
