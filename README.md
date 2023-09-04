@@ -31,7 +31,7 @@ plugins {
 
 ### Declaring dependencies
 
-Instead of using the `compileOnly` configuration and then manually specifying the dependencies in the libby code, you
+Instead of using the `compileOnly` configuration, and then manually specifying the dependencies in the libby code, you
 can simply replace `compileOnly` with `libby`:
 
 ```groovy
@@ -46,7 +46,7 @@ and their repositories.
 
 ### Linking with libby
 
-The plugin itself only creates the libby.json which specifies what libraries should libby load. However, we need to tell
+The plugin itself only creates the `libby.json` which specifies what libraries should libby load. However, we need to tell
 libby to load it.
 
 Fortunately, we can do this easily by invoking the `LibraryManager.configureFromJSON()` method. You can find an example
@@ -80,7 +80,7 @@ This will relocate all the classes in the `com.zaxxer.hikari` package to `com.ex
 about relocation in
 the [shadow plugin documentation](https://imperceptiblethoughts.com/shadow/configuration/relocation/).
 
-**If you use this feature, you must build your plugin using the shadowJar task!**
+**If you use the relocation feature, you must build your plugin using the shadowJar task!**
 
 #### Excluding dependencies
 
