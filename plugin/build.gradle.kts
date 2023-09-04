@@ -9,6 +9,7 @@ plugins {
     // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
     `java-gradle-plugin`
     `maven-publish`
+    id("org.cadixdev.licenser").version("0.6.1")
 }
 
 repositories {
@@ -46,6 +47,40 @@ tasks.named<Test>("test") {
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+    withSourcesJar()
+    withJavadocJar()
+}
+
+license {
+    header(rootProject.file("HEADER.txt"))
+    include("**/*.java")
+    newLine(true)
+}
+
+tasks.withType<JavaCompile> {
+    options.compilerArgs.add("-parameters")
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "kyngsRepo"
+            url = uri(
+                    "https://repo.kyngs.xyz/" + (if (project.version.toString()
+                                    .contains("SNAPSHOT")
+                    ) "snapshots" else "releases") + "/"
+            )
+            credentials(PasswordCredentials::class)
+            authentication {
+                create<BasicAuthentication>("basic")
+            }
+        }
+    }
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
+    }
 }
 
 version = "1.0.0"

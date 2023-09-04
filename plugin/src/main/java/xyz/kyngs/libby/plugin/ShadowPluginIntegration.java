@@ -1,12 +1,15 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
 package xyz.kyngs.libby.plugin;
 
-import com.github.jengelman.gradle.plugins.shadow.internal.AbstractDependencyFilter;
 import com.github.jengelman.gradle.plugins.shadow.relocation.Relocator;
 import com.github.jengelman.gradle.plugins.shadow.relocation.SimpleRelocator;
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar;
 import org.gradle.api.Project;
-import org.gradle.api.artifacts.ResolvedDependency;
-import org.gradle.api.specs.Spec;
 
 import java.util.ArrayList;
 import java.util.List;
