@@ -76,7 +76,6 @@ public class LibbyTask extends DefaultTask {
             try (var fis = new java.io.FileInputStream(jar)) {
                 var bytes = fis.readAllBytes();
                 var hash = md.digest(bytes);
-                System.out.println("Checksum for " + artifact.getFile().getAbsolutePath() + ": " + Base64.getEncoder().encodeToString(hash));
                 writer.value("checksum", Base64.getEncoder().encodeToString(hash));
             } catch (IOException e) {
                 throw new RuntimeException(e);
