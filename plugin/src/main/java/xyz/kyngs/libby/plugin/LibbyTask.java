@@ -45,6 +45,7 @@ public class LibbyTask extends DefaultTask {
                 .getByName(SourceSet.MAIN_SOURCE_SET_NAME);
 
         var excludedDependencies = project.getExtensions().getByType(LibbyExtension.class).getExcludedDependencies();
+        var noChecksumDependencies = project.getExtensions().getByType(LibbyExtension.class).getNoChecksumDependencies();
 
         var output = new File(project.getBuildDir().getPath() + "/libby", "libby.json");
         output.getParentFile().mkdirs();
@@ -71,6 +72,7 @@ public class LibbyTask extends DefaultTask {
             writer.value("version", id.getVersion());
             if (artifact.getClassifier() != null) writer.value("classifier", artifact.getClassifier());
             if (!artifact.getType().equals("jar")) continue;
+            if (noChecksumDependencies.stream().anyMatch(id.toString()::matches)) continue;
             var jar = artifact.getFile();
 
             try (var fis = new java.io.FileInputStream(jar)) {
