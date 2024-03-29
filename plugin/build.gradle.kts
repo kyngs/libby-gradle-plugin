@@ -34,7 +34,7 @@ gradlePlugin {
         create("xyz.kyngs.libby.plugin") {
             id = "xyz.kyngs.libby.plugin"
             implementationClass = "xyz.kyngs.libby.plugin.LibbyGradlePlugin"
-            version = "1.0.0"
+            version = project.version
         }
     }
 }
@@ -76,4 +76,4 @@ publishing {
     }
 }
 
-version = "1.1.1"
+version = "1.2.0"
