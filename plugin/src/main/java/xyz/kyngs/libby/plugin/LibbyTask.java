@@ -71,8 +71,10 @@ public class LibbyTask extends DefaultTask {
             writer.value("name", id.getName());
             writer.value("version", id.getVersion());
             if (artifact.getClassifier() != null) writer.value("classifier", artifact.getClassifier());
-            if (!artifact.getType().equals("jar")) continue;
-            if (noChecksumDependencies.stream().anyMatch(id.toString()::matches)) continue;
+            if (!artifact.getType().equals("jar") || noChecksumDependencies.stream().anyMatch(id.toString()::matches)) {
+                writer.end();
+                continue;
+            }
             var jar = artifact.getFile();
 
             try (var fis = new java.io.FileInputStream(jar)) {
