@@ -46,6 +46,7 @@ public class LibbyTask extends DefaultTask {
 
         var excludedDependencies = project.getExtensions().getByType(LibbyExtension.class).getExcludedDependencies();
         var noChecksumDependencies = project.getExtensions().getByType(LibbyExtension.class).getNoChecksumDependencies();
+        var doNotGenerateChecksum = project.getExtensions().getByType(LibbyExtension.class).isDoNotGenerateChecksum();
 
         var output = new File(project.getBuildDir().getPath() + "/libby", "libby.json");
         output.getParentFile().mkdirs();
@@ -77,12 +78,14 @@ public class LibbyTask extends DefaultTask {
             }
             var jar = artifact.getFile();
 
-            try (var fis = new java.io.FileInputStream(jar)) {
-                var bytes = fis.readAllBytes();
-                var hash = md.digest(bytes);
-                writer.value("checksum", Base64.getEncoder().encodeToString(hash));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            if (!doNotGenerateChecksum) {
+                try (var fis = new java.io.FileInputStream(jar)) {
+                    var bytes = fis.readAllBytes();
+                    var hash = md.digest(bytes);
+                    writer.value("checksum", Base64.getEncoder().encodeToString(hash));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             writer.end();

@@ -12,6 +12,7 @@ import java.util.List;
 public class LibbyExtension {
     private List<String> excludedDependencies = new ArrayList<>();
     private List<String> noChecksumDependencies = new ArrayList<>();
+    private boolean doNotGenerateChecksum = false;
 
     public List<String> getExcludedDependencies() {
         return excludedDependencies;
@@ -41,5 +42,21 @@ public class LibbyExtension {
      */
     public void noChecksumDependency(String dependency) {
         noChecksumDependencies.add(dependency);
+    }
+
+    /**
+     * Returns if the checksum will not be generated.
+     */
+    public boolean isDoNotGenerateChecksum() {
+        return doNotGenerateChecksum;
+    }
+
+    /**
+     * Sets if the checksum will not be generated.
+     *
+     * @param doNotGenerateChecksum A boolean value indicates if the checksum will not be generated
+     */
+    public void setDoNotGenerateChecksum(boolean doNotGenerateChecksum) {
+        this.doNotGenerateChecksum = doNotGenerateChecksum;
     }
 }
