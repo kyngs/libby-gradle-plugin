@@ -67,8 +67,8 @@ public class LibbyTask extends DefaultTask {
             if (excludedDependencies.stream().anyMatch(id.toString()::matches)) continue;
 
             writer.object();
-            writer.value("group", id.getGroup().replace(".", "{}"));
-            writer.value("name", id.getName());
+            writer.value("groupId", id.getGroup().replace(".", "{}"));
+            writer.value("artifactId", id.getName());
             writer.value("version", id.getVersion());
             if (artifact.getClassifier() != null) writer.value("classifier", artifact.getClassifier());
             if (!artifact.getType().equals("jar") || noChecksumDependencies.stream().anyMatch(id.toString()::matches)) {
