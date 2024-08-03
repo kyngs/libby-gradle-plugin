@@ -107,9 +107,13 @@ public class LibbyTask extends DefaultTask {
         var relocations = extractShadowJarRelocations();
 
         if (relocations != null) {
-            writer.object("relocations");
+            writer.array("relocations");
             for (var relocation : relocations) {
-                writer.value(relocation.from.replace(".", "{}"), relocation.to.replace(".", "{}"));
+                writer.object();
+                writer.value("pattern", relocation.from.replace(".", "{}"));
+                writer.value("relocatedPattern", relocation.to.replace(".", "{}"));
+                // End relocation entry object
+                writer.end();
             }
             // End relocations object
             writer.end();
