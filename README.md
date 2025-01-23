@@ -1,6 +1,6 @@
 # libby-gradle-plugin
 
-A solution to easily download dependencies at runtime with Gradle and [Libby](https://github.com/AlessioDP/libby).
+A solution to easily download dependencies at runtime with Gradle and my fork of [Libby](https://github.com/kyngs/libby).
 
 ## How to use
 
