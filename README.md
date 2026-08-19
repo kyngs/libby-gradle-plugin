@@ -1,3 +1,6 @@
+# ARCHIVAL NOTICE
+This project has been merged into https://github.com/kyngs/libby
+
 # libby-gradle-plugin
 
 A solution to easily download dependencies at runtime with Gradle and my fork of [Libby](https://github.com/kyngs/libby).
